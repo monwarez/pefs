@@ -2777,7 +2777,7 @@ pefs_setkey(struct vnode *vp, struct pefs_key *pk, struct ucred *cred,
 	namelen = MAXNAMLEN - 1;
 	dvp = vp;
 	vref(vp);
-	error = vn_vptocnp(&dvp, cred, namebuf, &namelen);
+	error = vn_vptocnp(&dvp, namebuf, &namelen);
 	if (error != 0) {
 		PEFSDEBUG("pefs_setkey: vn_vptocnp failed: error=%d; vp=%p\n",
 		    error, vp);
