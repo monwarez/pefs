@@ -227,7 +227,7 @@ pefs_mount(struct mount *mp)
 	 */
 	lowerrootvp = ndp->ni_vp;
 	vn_lock(lowerrootvp, LK_EXCLUSIVE | LK_RETRY);
-	if ((lowerrootvp->v_iflag & VI_DOOMED) != 0) {
+	if (VN_IS_DOOMED(lowerrootvp) != 0) {
 		PEFSDEBUG("pefs_mount: target vnode disappeared\n");
 		vput(lowerrootvp);
 		return (ENOENT);

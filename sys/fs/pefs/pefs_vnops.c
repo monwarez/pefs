@@ -508,7 +508,7 @@ pefs_lookup_lower(struct vnode *dvp, struct vnode **lvpp,
 	error = VOP_LOOKUP(ldvp, &lvp, cnp);
 
 	if ((error == 0 || error == EJUSTRETURN) &&
-	    (dvp->v_iflag & VI_DOOMED) != 0) {
+	    VN_IS_DOOMED(dvp) != 0) {
 		error = ENOENT;
 		if (lvp != NULL)
 			vput(lvp);

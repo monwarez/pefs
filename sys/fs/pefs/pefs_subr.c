@@ -388,7 +388,7 @@ pefs_node_get(struct mount *mp, struct vnode *lvp, struct vnode **vpp,
 
 	if (VOP_ISLOCKED(lvp) != LK_EXCLUSIVE) {
 		vn_lock(lvp, LK_UPGRADE | LK_RETRY);
-		if ((lvp->v_iflag & VI_DOOMED) != 0) {
+		if (VN_IS_DOOMED(lvp) != 0) {
 			printf("pefs_node_get: failed to upgrade lock: lvp %p\n", lvp);
 			return (ENOENT);
 		}
