@@ -193,7 +193,7 @@ pefs_mount(struct mount *mp)
 	 */
 	if ((mp->mnt_vnodecovered->v_op == &pefs_vnodeops) &&
 		VOP_ISLOCKED(mp->mnt_vnodecovered)) {
-		VOP_UNLOCK(mp->mnt_vnodecovered, 0);
+		VOP_UNLOCK(mp->mnt_vnodecovered);
 		isvnunlocked = 1;
 	}
 	/*
@@ -301,7 +301,7 @@ pefs_mount(struct mount *mp)
 	/*
 	 * Unlock the node (either the lower or the alias)
 	 */
-	VOP_UNLOCK(vp, 0);
+	VOP_UNLOCK(vp);
 
 
 	MNT_ILOCK(mp);

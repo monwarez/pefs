@@ -254,12 +254,12 @@ pefs_node_lookup_name(struct vnode *lvp, struct vnode *ldvp, struct ucred *cred,
 	if (ldvp) {
 		dlocked = VOP_ISLOCKED(ldvp);
 		if (dlocked)
-			VOP_UNLOCK(ldvp, 0);
+			VOP_UNLOCK(ldvp);
 	} else
 		dlocked = 0;
 
 	vref(lvp);
-	VOP_UNLOCK(lvp, 0);
+	VOP_UNLOCK(lvp);
 	nldvp = lvp;
 	error = vn_vptocnp(&nldvp, cred, encname, encname_len);
 	if (error == 0) {
