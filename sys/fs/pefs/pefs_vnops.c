@@ -330,7 +330,7 @@ pefs_flushkey(struct mount *mp, struct thread *td, int flags,
 	rootvp = VFS_TO_PEFS(mp)->pm_rootvp;
 #if __FreeBSD_version >= 1000025
 loop:
-	MNT_VNODE_FOREACH_ACTIVE(vp, mp, mvp) {
+	MNT_VNODE_FOREACH_ALL(vp, mp, mvp) {
 		if ((vp->v_type != VREG && vp->v_type != VDIR) ||
 		    vp == rootvp) {
 			VI_UNLOCK(vp);
@@ -339,7 +339,7 @@ loop:
 		error = vget(vp, LK_EXCLUSIVE | LK_INTERLOCK, td);
 		if (error != 0) {
 			if (error == ENOENT) {
-				MNT_VNODE_FOREACH_ACTIVE_ABORT(mp, mvp);
+				MNT_VNODE_FOREACH_ALL_ABORT(mp, mvp);
 				goto loop;
 			}
 			continue;
