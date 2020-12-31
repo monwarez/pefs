@@ -248,6 +248,7 @@ pefs_node_lookup_name(struct vnode *lvp, struct vnode *ldvp, struct ucred *cred,
 	struct vnode *nldvp;
 	int error, locked, dlocked;
 	int buflen = *encname_len;
+	size_t encname_buflen = *encname_len;
 
 	ASSERT_VOP_LOCKED(lvp, "pefs_node_lookup_name");
 	locked = VOP_ISLOCKED(lvp);
@@ -261,7 +262,9 @@ pefs_node_lookup_name(struct vnode *lvp, struct vnode *ldvp, struct ucred *cred,
 	vref(lvp);
 	VOP_UNLOCK(lvp);
 	nldvp = lvp;
-	error = vn_vptocnp(&nldvp, encname, encname_len);
+	encname_buflen = *encname_len;
+	error = vn_vptocnp(&nldvp, encname, &encname_buflen);
+	*encname_len = encname_buflen;
 	if (error == 0) {
 #if __FreeBSD_version >= 900501
 		vrele(nldvp);
