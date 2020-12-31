@@ -204,7 +204,7 @@ pefs_mount(struct mount *mp)
 
 	if (error == 0) {
 		from_free = NULL;
-		error = vn_fullpath(curthread, ndp->ni_vp, &from,
+		error = vn_fullpath(ndp->ni_vp, &from,
 		    &from_free);
 		if (error == 0)
 			vfs_mountedfrom(mp, from);
