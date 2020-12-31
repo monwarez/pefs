@@ -321,7 +321,7 @@ pefs_flushkey(struct mount *mp, struct thread *td, int flags,
 	struct pefs_node *pn;
 	int error;
 
-#if __FreeBSD_version >= 1200013 || defined(PEFS_OSREL_1200013_CACHE_PURGEVFS)
+#if (__FreeBSD_version >= 1200013 || defined(PEFS_OSREL_1200013_CACHE_PURGEVFS)) && __FreeBSD_version < 1300117
 	cache_purgevfs(mp, true);
 #else
 	cache_purgevfs(mp);
