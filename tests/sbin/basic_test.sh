@@ -35,6 +35,9 @@ basic_body() {
   atf_check -s exit:0 -o empty -e empty pefs addkey -cj keyfile mnt
   orig=$(dd if=/dev/random count=100 | tee mnt/testfile | sha256 -q)
   atf_check -s exit:0 -o empty -e empty pefs umount mnt
+  if [ -e mnt/testfile ]; then
+      aft_fail "Test filename was present after umount"
+  fi
   atf_check -s exit:0 -o empty -e empty pefs mount mnt mnt
   atf_check -s exit:0 -o empty -e empty pefs addkey -cj keyfile mnt
   new=$(sha256 -q mnt/testfile)
