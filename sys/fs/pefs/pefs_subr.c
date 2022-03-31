@@ -428,7 +428,7 @@ pefs_node_get(struct mount *mp, struct vnode *lvp, struct vnode **vpp,
 	vp->v_vnlock = lvp->v_vnlock;
 	if (vp->v_vnlock == NULL)
 		panic("pefs_node_get: Passed a NULL vnlock.\n");
-#if 1 /* 66c5fbca7719dca1ac361a010fa511a4514a662d */
+#if __FreeBSD_version > 1400050
 	error = insmntque1(vp, mp);
 	if (error != 0) {
 		pefs_insmntque_dtr(vp, pn);
