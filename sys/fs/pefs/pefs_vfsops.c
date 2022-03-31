@@ -200,7 +200,11 @@ pefs_mount(struct mount *mp)
 	/*
 	 * Find lower node
 	 */
+#if 1 /* 7e1d3eefd410ca0fbae5a217422821244c3eeee4 */
+	NDINIT(ndp, LOOKUP, FOLLOW, UIO_SYSSPACE, from);
+#else
 	NDINIT(ndp, LOOKUP, FOLLOW, UIO_SYSSPACE, from, curthread);
+#endif
 	error = namei(ndp);
 
 	if (error == 0) {
@@ -225,7 +229,11 @@ pefs_mount(struct mount *mp)
 
 	if (error != 0)
 		return (error);
+#if 1 /* cdb62ab74ee0cb99988c7831d950a6021aaa4879 */
+	NDFREE_PNBUF(ndp);
+#else
 	NDFREE(ndp, NDF_ONLY_PNBUF);
+#endif
 
 	/*
 	 * Sanity check on lower vnode
